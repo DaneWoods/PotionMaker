@@ -32,6 +32,7 @@ namespace PotionMaker.Controllers
         [HttpGet]
         public IActionResult PotionBrewing()
         {
+            // Keep studying the ViewModels
             PotionCreationViewModel pcvm = new PotionCreationViewModel();
             pcvm.IngList = repo.Ingredients;
             return View("PotionBrewing", pcvm);
