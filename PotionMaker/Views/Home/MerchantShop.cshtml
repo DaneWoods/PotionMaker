@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PotionMaker.Models.Ingredient>
+@{
+    ViewData["Title"] = "Merchant Shop";
+}
+<h1 class="text-center">Welcome to the merchant shop!!</h1>
+<p>This is where you can restock on all your potion ingredients.</p>
+<div class="panel-body">
+    <table class="table table-md text-md-left table-bordered">
+        <thead>
+            <tr>
+                <th>Ingredient Name</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Ingredient i in Model)
+            {
+            <tr>
+                <td>@i.IngName</td>
+                <td>@i.IngDescription</td>
+                <td>@i.IngStock </td>
+                <td><img /><input /><img /></td>
+                <td><button class="btn btn-success">Purchase</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PotionMaker.Models.Recipe>
+@{
+    ViewData["Title"] = "Recipe List";
+}
+<h2 class="text-center">All currently known recipes</h2>
+<div class="panel-body">
+    <table class="table table-md text-md-left table-bordered">
+        <thead>
+            <tr>
+                <th>Potion Recipe</th>
+                <th>Ingredient 1:</th>
+                <th>Ingredient 2:</th>
+                <th>Ingredient 3:</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Recipe r in Model)
+            {
+                <tr>
+                    <td>@r.RPotionName</td>
+                    @foreach (Ingredient i in r.RIngredients)
+                    {
+                        <td>@i.IngName</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

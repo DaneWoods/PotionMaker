@@ -1,0 +1,42 @@
+﻿@model PotionCreationViewModel
+@{
+    ViewData["Title"] = "Potion Brewing";
+}
+<div class="panel panel-success">
+    <div class="panel-heading text-left"><h4>Create a potion</h4></div>
+    <div class="panel-body">
+        <form class="p-4" asp-controller="Home" asp-action="Create Potion" asp-antiforgery="true" method="post">
+            <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
+            <div class="form-group">
+                <label class="form-control">Ingredient 1:</label>
+                <select class="form-control" name="-Choose-">
+                    @foreach (Ingredient Ing in Model.IngList)
+                    {
+                        <option asp-for="RIng1" value="@Ing.IngID">@Ing.IngName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-control">Ingredient 2:</label>
+                <select class="form-control" name="-Choose-">
+                    @foreach (Ingredient Ing in Model.IngList)
+                    {
+                        <option asp-for="RIng2" value="@Ing.IngID">@Ing.IngName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-control">Ingredient 3:</label>
+                <select class="form-control" name="-Choose-">
+                    @foreach (Ingredient Ing in Model.IngList)
+                    {
+                        <option asp-for="RIng3" value="@Ing.IngID">@Ing.IngName</option>
+                    }
+                </select>
+            </div>
+            <div class="text-md-left">
+                <button class="btn btn-primary" type="submit">Brew Potion</button>
+            </div>
+        </form>
+    </div>
+</div>
