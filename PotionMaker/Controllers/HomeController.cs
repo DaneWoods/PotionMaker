@@ -21,12 +21,12 @@ namespace PotionMaker.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public IActionResult MerchantShop()
         {
-            return View();
+            return View("MerchantShop", repo.Ingredients);
         }
 
         [HttpGet]
@@ -35,23 +35,23 @@ namespace PotionMaker.Controllers
             // Keep studying the ViewModels
             PotionCreationViewModel pcvm = new PotionCreationViewModel();
             pcvm.IngList = repo.Ingredients;
-            return View("PotionBrewing", pcvm);
+            return View(pcvm);
         }
 
         [HttpPost]
-        public IActionResult PotionBrewing()
+        public IActionResult PotionBrewing(PotionCreationViewModel pcvm)
         {
-            return View("PotionBrewing", repo.);
+            return RedirectToAction("PotionStock", repo.Ingredients);
         }
 
         public IActionResult PotionStock()
         {
-            return View();
+            return View(repo.Ingredients);
         }
 
         public IActionResult RecipeList()
         {
-            return View();
+            return View(repo.Recipes);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

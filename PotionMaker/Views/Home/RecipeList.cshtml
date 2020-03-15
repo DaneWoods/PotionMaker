@@ -16,13 +16,12 @@
         <tbody>
             @foreach (Recipe r in Model)
             {
-                <tr>
-                    <td>@r.RPotionName</td>
-                    @foreach (Ingredient i in r.RIngredients)
-                    {
-                        <td>@i.IngName</td>
-                    }
-                </tr>
+            <tr>
+                <td>@r.RPotionName</td>
+                <td>@r.RIng1.IngName</td>
+                <td>@r.RIng2.IngName</td>
+                <td>@r.RIng3.IngName</td>
+            </tr>
             }
         </tbody>
     </table>
