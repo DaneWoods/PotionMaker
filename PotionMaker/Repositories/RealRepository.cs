@@ -20,16 +20,55 @@ namespace PotionMaker.Repositories
             context = dbContext;
         }
 
-        //public Potion CreatePotionByIngredients()
-        //{
+        public Potion potionMakingLogic(Ingredient RIng1, Ingredient RIng2, Ingredient RIng3)
+        {
+            Potion p = new Potion();
+            p.CustomPotion = false;
+            p.PotionStock = 0;
+            for(int i = 0; i < Recipes.Count; i++)
+            {
+                if(Recipes[i].RIng1 == RIng1 && Recipes[i].RIng2 == RIng2 && Recipes[i].RIng3 == RIng3)
+                {
+                    p.PotionName = Recipes[i].RPotionName;
+                    p.PotionDescription = Recipes[i].RPotionDesc;
+                    p.PotionStock++;
+                    return p;
+                }
+            }
+            p.CustomPotion = true;
+            return p;
+        }
 
-        //}
+        public void addIngredientStock(MerchantShopViewModel msvn)
+        {
+            Ingredient i = getIngredientByID(msvn.IngredientID);
+            i.IngStock = i.IngStock + msvn.AmountBought;
+            context.Ingredients.Update(i);
+        }
 
-        //public void addPotion(PotionCreationViewModel pcvm)
-        //{
-        //    Potion p = new Potion();
-        //    p.
-        //    context.Add()
-        //}
+        public Ingredient getIngredientByID(int id)
+        {
+            return context.Ingredients.First(x => x.IngID == id);
+        }
+        public Potion getPotionByID(int id)
+        {
+            return context.Potions.First(x => x.PotionID == id);
+        }
+        public Recipe getRecipeByID(int id)
+        {
+            return context.Recipes.First(x => x.RecipeID == id);
+        }
+
+        public void addPotion(Potion p)
+        {
+            context.Potions.Add(p);
+            context.SaveChanges();
+        }
+
+        public void addRecipe(Recipe r)
+        {
+            context.Recipes.Add(r);
+            context.SaveChanges();
+        }
     }
 }

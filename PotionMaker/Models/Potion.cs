@@ -10,6 +10,7 @@ namespace PotionMaker.Models
     {
         [Key]
         public int PotionID { get; set; }
+        public bool CustomPotion { get; set; }
         public string PotionName { get; set; }
         public string PotionDescription { get; set; }
         public int PotionStock { get; set; }

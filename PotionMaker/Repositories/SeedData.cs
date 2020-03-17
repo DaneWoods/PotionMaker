@@ -40,17 +40,17 @@ namespace PotionMaker.Repositories
             if (!context.Recipes.Any())
             {
                 context.Recipes.AddRange(
-                    new Recipe { RPotionName = "Potion of Swiftness", RIng1 = nether, RIng2 = sugar, RIng3 = sugar },
-                    new Recipe { RPotionName = "Potion of Leaping", RIng1 = nether, RIng2 = rabbit, RIng3 = rabbit }
-                    //new Recipe { RPotionName = "Potion of Strength", RIngredients = { nether, blaze, blaze } },
-                    //new Recipe { RPotionName = "Potion of Healing", RIngredients = { nether, glistering, glistering } },
-                    //new Recipe { RPotionName = "Potion of Poison", RIngredients = { nether, spider, spider } },
-                    //new Recipe { RPotionName = "Potion of Regeneration", RIngredients = { nether, ghast, ghast } },
-                    //new Recipe { RPotionName = "Potion of Fire Resistance", RIngredients = { nether, magma, magma } },
-                    //new Recipe { RPotionName = "Potion of Water Breathing", RIngredients = { nether, puff, puff } },
-                    //new Recipe { RPotionName = "Potion of Night Vision", RIngredients = { nether, golden, golden } },
-                    //new Recipe { RPotionName = "Potion of Turtle Master", RIngredients = { nether, turtle, turtle } },
-                    //new Recipe { RPotionName = "Potion of Slow Falling", RIngredients = { nether, phantom, phantom } }
+                    new Recipe { RPotionName = "Potion of Swiftness", RPotionDesc = "Lets the user run increadibly fast.", RIng1 = nether, RIng2 = sugar, RIng3 = sugar },
+                    new Recipe { RPotionName = "Potion of Leaping", RPotionDesc = "Lets the user jump really high.", RIng1 = nether, RIng2 = rabbit, RIng3 = rabbit },
+                    new Recipe { RPotionName = "Potion of Strength", RPotionDesc = "Grants the strength of a god.", RIng1 = nether, RIng2 = blaze, RIng3 = blaze },
+                    new Recipe { RPotionName = "Potion of Healing", RPotionDesc = "Heals the user to their peak condition.", RIng1 = nether, RIng2 = glistering, RIng3 = glistering },
+                    new Recipe { RPotionName = "Potion of Poison", RPotionDesc = "Dont drink this at any cost.", RIng1 = nether, RIng2 = spider, RIng3 = spider },
+                    new Recipe { RPotionName = "Potion of Regeneration", RPotionDesc = "Like the health potion but heals over time.", RIng1 = nether, RIng2 = ghast, RIng3 = ghast },
+                    new Recipe { RPotionName = "Potion of Fire Resistance", RPotionDesc = "You are immune to fire damage.", RIng1 = nether, RIng2 = magma, RIng3 = magma },
+                    new Recipe { RPotionName = "Potion of Water Breathing", RPotionDesc = "You gain the ability to breath in water.", RIng1 = nether, RIng2 = puff, RIng3 = puff },
+                    new Recipe { RPotionName = "Potion of Night Vision", RPotionDesc = "Darkness in your eyes looks like daylight.", RIng1 = nether, RIng2 = golden, RIng3 = golden },
+                    new Recipe { RPotionName = "Potion of Turtle Master", RPotionDesc = "You move slower, but your strength increases 10 fold.", RIng1 = nether, RIng2 = turtle, RIng3 = turtle },
+                    new Recipe { RPotionName = "Potion of Slow Falling", RPotionDesc = "You glide gracefully to the ground", RIng1 = nether, RIng2 = phantom, RIng3 = phantom }
                     );
                 context.SaveChanges();
             }

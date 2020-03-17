@@ -207,6 +207,8 @@ namespace PotionMaker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("CustomPotion");
+
                     b.Property<string>("PotionDescription");
 
                     b.Property<string>("PotionName");
@@ -229,6 +231,8 @@ namespace PotionMaker.Migrations
                     b.Property<int?>("RIng2IngID");
 
                     b.Property<int?>("RIng3IngID");
+
+                    b.Property<string>("RPotionDesc");
 
                     b.Property<string>("RPotionName");
 

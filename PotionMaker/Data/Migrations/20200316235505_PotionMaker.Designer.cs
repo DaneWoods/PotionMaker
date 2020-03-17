@@ -10,7 +10,7 @@ using PotionMaker.Repositories;
 namespace PotionMaker.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200315063004_PotionMaker")]
+    [Migration("20200316235505_PotionMaker")]
     partial class PotionMaker
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,6 +209,8 @@ namespace PotionMaker.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("CustomPotion");
+
                     b.Property<string>("PotionDescription");
 
                     b.Property<string>("PotionName");
@@ -231,6 +233,8 @@ namespace PotionMaker.Data.Migrations
                     b.Property<int?>("RIng2IngID");
 
                     b.Property<int?>("RIng3IngID");
+
+                    b.Property<string>("RPotionDesc");
 
                     b.Property<string>("RPotionName");
 

@@ -12,7 +12,7 @@
                 <select class="form-control" name="-Choose-">
                     @foreach (Ingredient Ing in Model.IngList)
                     {
-                        <option asp-for="RIng1" value="@Ing.IngID">@Ing.IngName</option>
+                        <option asp-for="RIng1ID" value="@Ing.IngID">@Ing.IngName</option>
                     }
                 </select>
             </div>
@@ -21,7 +21,7 @@
                 <select class="form-control" name="-Choose-">
                     @foreach (Ingredient Ing in Model.IngList)
                     {
-                        <option asp-for="RIng2" value="@Ing.IngID">@Ing.IngName</option>
+                        <option asp-for="RIng2ID" value="@Ing.IngID">@Ing.IngName</option>
                     }
                 </select>
             </div>
@@ -30,7 +30,7 @@
                 <select class="form-control" name="-Choose-">
                     @foreach (Ingredient Ing in Model.IngList)
                     {
-                        <option asp-for="RIng3" value="@Ing.IngID">@Ing.IngName</option>
+                        <option asp-for="RIng3ID" value="@Ing.IngID">@Ing.IngName</option>
                     }
                 </select>
             </div>

@@ -6,11 +6,10 @@ using PotionMaker.Models;
 
 namespace PotionMaker.ViewModels
 {
-    public class PotionCreationViewModel
+    public class MerchantShopViewModel
     {
-        public int RIng1ID { get; set; }
-        public int RIng2ID { get; set; }
-        public int RIng3ID { get; set; }
+        public int IngredientID { get; set; }
+        public int AmountBought { get; set; }
         public List<Ingredient> IngList { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PotionMaker.Models.Ingredient>
+﻿@model MerchantShopViewModel
 @{
     ViewData["Title"] = "Merchant Shop";
 }
@@ -10,21 +10,27 @@
             <tr>
                 <th>Ingredient Name</th>
                 <th>Description</th>
-                <th>Amount</th>
-                <th></th>
+                <th>Amount at home</th>
+                <th>Amount to buy</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (Ingredient i in Model)
+            @foreach (Ingredient i in Model.IngList)
             {
             <tr>
                 <td>@i.IngName</td>
                 <td>@i.IngDescription</td>
                 <td>@i.IngStock </td>
-                <td><img /><input /><img /></td>
-                <td><button class="btn btn-success">Purchase</button></td>
+                <td>
+                    <form>
+                        <input type="hidden" value="@i.IngID" asp-for="IngredientID" />
+                        <input asp-for="AmountBought" />
+                        <button class="btn btn-success" type="submit" asp-action="MerchantShop">Complete Order</button>
+                    </form>
+                </td>
             </tr>
             }
         </tbody>
     </table>
+    <button class="btn btn-success">Complete Order</button>
 </div>

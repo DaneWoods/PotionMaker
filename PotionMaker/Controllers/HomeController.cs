@@ -24,11 +24,6 @@ namespace PotionMaker.Controllers
             return View("Index");
         }
 
-        public IActionResult MerchantShop()
-        {
-            return View("MerchantShop", repo.Ingredients);
-        }
-
         [HttpGet]
         public IActionResult PotionBrewing()
         {
@@ -41,7 +36,30 @@ namespace PotionMaker.Controllers
         [HttpPost]
         public IActionResult PotionBrewing(PotionCreationViewModel pcvm)
         {
+            Ingredient i1 = repo.getIngredientByID(pcvm.RIng1ID);
+            Ingredient i2 = repo.getIngredientByID(pcvm.RIng2ID);
+            Ingredient i3 = repo.getIngredientByID(pcvm.RIng3ID);
+            Potion p = repo.potionMakingLogic(i1, i2, i3);
+            if(p.CustomPotion == true)
+            {
+                return RedirectToAction("CustomPotion");
+            }
             return RedirectToAction("PotionStock", repo.Ingredients);
+        }
+
+        [HttpGet]
+        public IActionResult MerchantShop()
+        {
+            MerchantShopViewModel msvm = new MerchantShopViewModel();
+            msvm.IngList = repo.Ingredients;
+            return View(msvm);
+        }
+
+        [HttpPost]
+        public IActionResult MerchantShop(MerchantShopViewModel msvn)
+        {
+
+            return View("MerchantShop", repo.Ingredients);
         }
 
         public IActionResult PotionStock()

@@ -28,6 +28,7 @@ namespace PotionMaker.Data.Migrations
                 {
                     PotionID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomPotion = table.Column<bool>(nullable: false),
                     PotionName = table.Column<string>(nullable: true),
                     PotionDescription = table.Column<string>(nullable: true),
                     PotionStock = table.Column<int>(nullable: false)
@@ -44,6 +45,7 @@ namespace PotionMaker.Data.Migrations
                     RecipeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RPotionName = table.Column<string>(nullable: true),
+                    RPotionDesc = table.Column<string>(nullable: true),
                     RIng1IngID = table.Column<int>(nullable: true),
                     RIng2IngID = table.Column<int>(nullable: true),
                     RIng3IngID = table.Column<int>(nullable: true)
