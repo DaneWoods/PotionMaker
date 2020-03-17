@@ -28,14 +28,34 @@ namespace PotionMaker.Data.Migrations
                 {
                     PotionID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomPotion = table.Column<bool>(nullable: false),
-                    PotionName = table.Column<string>(nullable: true),
-                    PotionDescription = table.Column<string>(nullable: true),
+                    PotionName = table.Column<string>(maxLength: 50, nullable: false),
+                    PotionDescription = table.Column<string>(maxLength: 100, nullable: false),
+                    PIng1IngID = table.Column<int>(nullable: true),
+                    PIng2IngID = table.Column<int>(nullable: true),
+                    PIng3IngID = table.Column<int>(nullable: true),
                     PotionStock = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Potions", x => x.PotionID);
+                    table.ForeignKey(
+                        name: "FK_Potions_Ingredients_PIng1IngID",
+                        column: x => x.PIng1IngID,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Potions_Ingredients_PIng2IngID",
+                        column: x => x.PIng2IngID,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Potions_Ingredients_PIng3IngID",
+                        column: x => x.PIng3IngID,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,7 +65,6 @@ namespace PotionMaker.Data.Migrations
                     RecipeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RPotionName = table.Column<string>(nullable: true),
-                    RPotionDesc = table.Column<string>(nullable: true),
                     RIng1IngID = table.Column<int>(nullable: true),
                     RIng2IngID = table.Column<int>(nullable: true),
                     RIng3IngID = table.Column<int>(nullable: true)
@@ -72,6 +91,21 @@ namespace PotionMaker.Data.Migrations
                         principalColumn: "IngID",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Potions_PIng1IngID",
+                table: "Potions",
+                column: "PIng1IngID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Potions_PIng2IngID",
+                table: "Potions",
+                column: "PIng2IngID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Potions_PIng3IngID",
+                table: "Potions",
+                column: "PIng3IngID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipes_RIng1IngID",

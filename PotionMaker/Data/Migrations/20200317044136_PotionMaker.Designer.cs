@@ -10,7 +10,7 @@ using PotionMaker.Repositories;
 namespace PotionMaker.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200316235505_PotionMaker")]
+    [Migration("20200317044136_PotionMaker")]
     partial class PotionMaker
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,15 +209,29 @@ namespace PotionMaker.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("CustomPotion");
+                    b.Property<int?>("PIng1IngID");
 
-                    b.Property<string>("PotionDescription");
+                    b.Property<int?>("PIng2IngID");
 
-                    b.Property<string>("PotionName");
+                    b.Property<int?>("PIng3IngID");
+
+                    b.Property<string>("PotionDescription")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PotionName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("PotionStock");
 
                     b.HasKey("PotionID");
+
+                    b.HasIndex("PIng1IngID");
+
+                    b.HasIndex("PIng2IngID");
+
+                    b.HasIndex("PIng3IngID");
 
                     b.ToTable("Potions");
                 });
@@ -233,8 +247,6 @@ namespace PotionMaker.Data.Migrations
                     b.Property<int?>("RIng2IngID");
 
                     b.Property<int?>("RIng3IngID");
-
-                    b.Property<string>("RPotionDesc");
 
                     b.Property<string>("RPotionName");
 
@@ -292,6 +304,21 @@ namespace PotionMaker.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PotionMaker.Models.Potion", b =>
+                {
+                    b.HasOne("PotionMaker.Models.Ingredient", "PIng1")
+                        .WithMany()
+                        .HasForeignKey("PIng1IngID");
+
+                    b.HasOne("PotionMaker.Models.Ingredient", "PIng2")
+                        .WithMany()
+                        .HasForeignKey("PIng2IngID");
+
+                    b.HasOne("PotionMaker.Models.Ingredient", "PIng3")
+                        .WithMany()
+                        .HasForeignKey("PIng3IngID");
                 });
 
             modelBuilder.Entity("PotionMaker.Models.Recipe", b =>

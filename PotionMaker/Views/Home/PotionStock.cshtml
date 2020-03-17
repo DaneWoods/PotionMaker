@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PotionMaker.Models.Ingredient>
+﻿@model PotionStockViewModel
 @{
     ViewData["Title"] = "Ingredient Stock";
 }
@@ -14,12 +14,31 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Ingredient i in Model)
+            @foreach (Ingredient i in Model.Ingredients)
             {
                 <tr>
                     <td>@i.IngName</td>
                     <td>@i.IngDescription</td>
                     <td>@i.IngStock </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <table class="table table-md text-md-left table-bordered">
+        <thead>
+            <tr>
+                <th>Potion Name</th>
+                <th>Potion Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Potion p in Model.Potions)
+            {
+                <tr>
+                    <td>@p.PotionName</td>
+                    <td>@p.PotionDescription</td>
+                    <td>@p.PotionStock</td>
                 </tr>
             }
         </tbody>

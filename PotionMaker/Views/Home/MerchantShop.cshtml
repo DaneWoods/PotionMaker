@@ -22,15 +22,14 @@
                 <td>@i.IngDescription</td>
                 <td>@i.IngStock </td>
                 <td>
-                    <form>
+                    <form asp-controller="Home" asp-action="MerchantShop" asp-antiforgery="true" method="post">
                         <input type="hidden" value="@i.IngID" asp-for="IngredientID" />
-                        <input asp-for="AmountBought" />
-                        <button class="btn btn-success" type="submit" asp-action="MerchantShop">Complete Order</button>
+                        <input asp-for="AmountBought" value="0"/>
+                        <button class="btn btn-success" type="submit">Complete Order</button>
                     </form>
                 </td>
             </tr>
             }
         </tbody>
     </table>
-    <button class="btn btn-success">Complete Order</button>
 </div>

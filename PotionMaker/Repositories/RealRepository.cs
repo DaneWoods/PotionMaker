@@ -20,23 +20,37 @@ namespace PotionMaker.Repositories
             context = dbContext;
         }
 
-        public Potion potionMakingLogic(Ingredient RIng1, Ingredient RIng2, Ingredient RIng3)
+        //public bool potionNameExists(Potion p)
+        //{
+        //    bool nameExists = false;
+        //    for (int i = 0; i < Recipes.Count; i++)
+        //    {
+        //        if(Recipes[i])
+        //        {
+        //            return nameExists = true;
+        //        }
+        //    }
+        //    return nameExists;
+        //}
+
+        public bool potionExists(Potion p)
         {
-            Potion p = new Potion();
-            p.CustomPotion = false;
-            p.PotionStock = 0;
-            for(int i = 0; i < Recipes.Count; i++)
+            bool pExists = false;
+            for(int i = 0; i < Potions.Count; i++)
             {
-                if(Recipes[i].RIng1 == RIng1 && Recipes[i].RIng2 == RIng2 && Recipes[i].RIng3 == RIng3)
+                if(Potions[i] == p)
                 {
-                    p.PotionName = Recipes[i].RPotionName;
-                    p.PotionDescription = Recipes[i].RPotionDesc;
-                    p.PotionStock++;
-                    return p;
+                    return pExists = true;
                 }
             }
-            p.CustomPotion = true;
-            return p;
+            return pExists;
+        }
+        public void incrementPotion(Potion p)
+        {
+            Potion cP = context.Potions.First(x => x == p);
+            cP.PotionStock++;
+            context.Update(cP);
+            context.SaveChanges();
         }
 
         public void addIngredientStock(MerchantShopViewModel msvn)
@@ -44,6 +58,35 @@ namespace PotionMaker.Repositories
             Ingredient i = getIngredientByID(msvn.IngredientID);
             i.IngStock = i.IngStock + msvn.AmountBought;
             context.Ingredients.Update(i);
+            context.SaveChanges();
+        }
+
+        public void minusIngredientStock(Recipe r)
+        {
+            Ingredient i1 = context.Ingredients.First(x => x.IngID == r.RIng1.IngID);
+            Ingredient i2 = context.Ingredients.First(x => x.IngID == r.RIng2.IngID);
+            Ingredient i3 = context.Ingredients.First(x => x.IngID == r.RIng3.IngID);
+            i1.IngStock--;
+            i2.IngStock--;
+            i3.IngStock--;
+            context.Ingredients.Update(i1);
+            context.Ingredients.Update(i2);
+            context.Ingredients.Update(i3);
+            context.SaveChanges();
+        }
+
+        public void addIngredientRecipeStock(Recipe r)
+        {
+            Ingredient i1 = context.Ingredients.First(x => x.IngID == r.RIng1.IngID);
+            Ingredient i2 = context.Ingredients.First(x => x.IngID == r.RIng2.IngID);
+            Ingredient i3 = context.Ingredients.First(x => x.IngID == r.RIng3.IngID);
+            i1.IngStock++;
+            i2.IngStock++;
+            i3.IngStock++;
+            context.Ingredients.Update(i1);
+            context.Ingredients.Update(i2);
+            context.Ingredients.Update(i3);
+            context.SaveChanges();
         }
 
         public Ingredient getIngredientByID(int id)
@@ -54,9 +97,34 @@ namespace PotionMaker.Repositories
         {
             return context.Potions.First(x => x.PotionID == id);
         }
+
+        public Potion getPotionByName(string pName)
+        {
+            foreach(Potion po in context.Potions)
+            {
+                if(po.PotionName == pName)
+                {
+                    return po;
+                }
+            }
+            return null;
+        }
+
         public Recipe getRecipeByID(int id)
         {
             return context.Recipes.First(x => x.RecipeID == id);
+        }
+
+        public Recipe getRecipeByName(string pName)
+        {
+            foreach (Recipe r in context.Recipes)
+            {
+                if (r.RPotionName == pName)
+                {
+                    return r;
+                }
+            }
+            return null;
         }
 
         public void addPotion(Potion p)

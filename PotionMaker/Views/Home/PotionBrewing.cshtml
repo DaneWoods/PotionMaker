@@ -3,40 +3,56 @@
     ViewData["Title"] = "Potion Brewing";
 }
 <div class="panel panel-success">
-    <div class="panel-heading text-left"><h4>Create a potion</h4></div>
-    <div class="panel-body">
-        <form class="p-4" asp-controller="Home" asp-action="Create Potion" asp-antiforgery="true" method="post">
-            <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
-            <div class="form-group">
-                <label class="form-control">Ingredient 1:</label>
-                <select class="form-control" name="-Choose-">
-                    @foreach (Ingredient Ing in Model.IngList)
-                    {
-                        <option asp-for="RIng1ID" value="@Ing.IngID">@Ing.IngName</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-control">Ingredient 2:</label>
-                <select class="form-control" name="-Choose-">
-                    @foreach (Ingredient Ing in Model.IngList)
-                    {
-                        <option asp-for="RIng2ID" value="@Ing.IngID">@Ing.IngName</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-control">Ingredient 3:</label>
-                <select class="form-control" name="-Choose-">
-                    @foreach (Ingredient Ing in Model.IngList)
-                    {
-                        <option asp-for="RIng3ID" value="@Ing.IngID">@Ing.IngName</option>
-                    }
-                </select>
-            </div>
-            <div class="text-md-left">
-                <button class="btn btn-primary" type="submit">Brew Potion</button>
-            </div>
-        </form>
-    </div>
+        <div class="panel-heading text-left"><h4>Create a potion</h4></div>
+        <div class="panel-body">
+            @if (Model.Error)
+            {
+                <h1>You bad</h1>
+            }
+            @if (Model.outOfStock)
+            {
+                <h1>You not enough goods my man.</h1>
+            }
+            <form asp-controller="Home" asp-action="PotionBrewing" asp-antiforgery="true" method="post">
+                <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
+                <div>
+                    <div class="form-group">
+                        <label class="form-control">Potion Name:</label>
+                        <span asp-validation-for="PotionName"></span>
+                        <input class="form-control" asp-for="PotionName" />
+                        <br />
+                        <label class="form-control">Potion Desc:</label>
+                        <input class="form-control" asp-for="PotionDesc" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Ingredient 1:</label>
+                        <select class="form-control" asp-for="RIng1ID">
+                            @foreach (Ingredient Ing in Model.Ingredients)
+                            {
+                                <option value="@Ing.IngID">@Ing.IngName</option>
+                            }
+                        </select>
+                        <br />
+                        <label class="form-control">Ingredient 2:</label>
+                        <select class="form-control" asp-for="RIng2ID">
+                            @foreach (Ingredient Ing in Model.Ingredients)
+                            {
+                                <option value="@Ing.IngID">@Ing.IngName</option>
+                            }
+                        </select>
+                        <br />
+                        <label class="form-control">Ingredient 3:</label>
+                        <select class="form-control" asp-for="RIng3ID">
+                            @foreach (Ingredient Ing in Model.Ingredients)
+                            {
+                                <option value="@Ing.IngID">@Ing.IngName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="text-md-left">
+                        <button class="btn btn-primary" type="submit">Brew Potion</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 </div>

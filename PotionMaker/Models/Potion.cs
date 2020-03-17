@@ -10,9 +10,13 @@ namespace PotionMaker.Models
     {
         [Key]
         public int PotionID { get; set; }
-        public bool CustomPotion { get; set; }
+        [Required(ErrorMessage = "Please input a title for your story")]
+        [StringLength(50, MinimumLength = 2)]
         public string PotionName { get; set; }
         public string PotionDescription { get; set; }
+        public Ingredient PIng1 { get; set; }
+        public Ingredient PIng2 { get; set; }
+        public Ingredient PIng3 { get; set; }
         public int PotionStock { get; set; }
     }
 }

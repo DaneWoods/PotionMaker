@@ -12,11 +12,17 @@ namespace PotionMaker.Repositories
         List<Ingredient> Ingredients { get; }
         List<Potion> Potions { get; }
         List<Recipe> Recipes { get; }
-        Potion potionMakingLogic(Ingredient RIng1, Ingredient RIng2, Ingredient RIng3);
+        //bool potionNameExists(Potion p);
+        bool potionExists(Potion p);
+        void incrementPotion(Potion p);
         void addIngredientStock(MerchantShopViewModel msvn);
+        void addIngredientRecipeStock(Recipe r);
+        void minusIngredientStock(Recipe r);
         Ingredient getIngredientByID(int id);
         Potion getPotionByID(int id);
+        Potion getPotionByName(string pName);
         Recipe getRecipeByID(int id);
+        Recipe getRecipeByName(string pName);
         void addPotion(Potion p);
         void addRecipe(Recipe r);
     }
