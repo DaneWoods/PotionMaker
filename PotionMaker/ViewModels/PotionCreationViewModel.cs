@@ -12,12 +12,15 @@ namespace PotionMaker.ViewModels
         [Required(ErrorMessage = "Please input a name for your potion")]
         [StringLength(50, MinimumLength = 2)]
         public string PotionName { get; set; }
-        [Required]
         public int RecipeID { get; set; }
-        [Required(ErrorMessage = "Please input the description of your potion")]
+        [Required(ErrorMessage = "Please input a name for your potion")]
+        [StringLength(50, MinimumLength = 2)]
         public string PotionDesc { get; set; }
+        [Required]
         public int RIng1ID { get; set; }
+        [Required]
         public int RIng2ID { get; set; }
+        [Required]
         public int RIng3ID { get; set; }
         public List<Ingredient> Ingredients { get; set; }
         public List<Recipe> Recipes { get; set; }

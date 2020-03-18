@@ -139,20 +139,21 @@ namespace PotionMaker.Controllers
         [HttpGet]
         public IActionResult RecipeBrewing()
         {
-            PotionCreationViewModel pcvm = new PotionCreationViewModel();
-            pcvm.Recipes = repo.Recipes;
-            return View(pcvm);
+            PotionRecipeCreationViewModel prcvm = new PotionRecipeCreationViewModel();
+            prcvm.Recipes = repo.Recipes;
+            return View(prcvm);
         }
 
         [Authorize(Roles = "Member,Admin")]
         [HttpPost]
-        public IActionResult RecipeBrewing(PotionCreationViewModel pcvm)
+        public IActionResult RecipeBrewing(PotionRecipeCreationViewModel prcvm)
         {
+            prcvm.Recipes = repo.Recipes;
             if (ModelState.IsValid)
             {
                 PotionStockViewModel psvm = new PotionStockViewModel();
-                pcvm.Ingredients = repo.Ingredients;
-                Recipe rec = repo.getRecipeByID(pcvm.RecipeID);
+                prcvm.Ingredients = repo.Ingredients;
+                Recipe rec = repo.getRecipeByID(prcvm.RecipeID);
                 Potion p = repo.getPotionByName(rec.RPotionName);
                 if (p == null)
                 {
@@ -161,8 +162,8 @@ namespace PotionMaker.Controllers
                     if (rec.RIng1.IngStock < 0 || rec.RIng2.IngStock < 0 || rec.RIng3.IngStock < 0)
                     {
                         repo.addIngredientRecipeStock(rec);
-                        pcvm.outOfStock = true;
-                        return View(pcvm);
+                        prcvm.outOfStock = true;
+                        return View(prcvm);
                     }
                     repo.addPotion(p);
                     psvm.Potions = repo.Potions;
@@ -173,8 +174,8 @@ namespace PotionMaker.Controllers
                 if (rec.RIng1.IngStock < 0 || rec.RIng2.IngStock < 0 || rec.RIng3.IngStock < 0)
                 {
                     repo.addIngredientRecipeStock(rec);
-                    pcvm.outOfStock = true;
-                    return View(pcvm);
+                    prcvm.outOfStock = true;
+                    return View(prcvm);
                 }
                 repo.incrementPotion(p);
                 psvm.Potions = repo.Potions;
@@ -182,7 +183,7 @@ namespace PotionMaker.Controllers
                 return RedirectToAction("PotionStock", psvm);
             }
             else
-                return View(pcvm);
+                return View(prcvm);
         }
 
         [Authorize(Roles = "Member,Admin")]
