@@ -1,28 +1,39 @@
-﻿@model IEnumerable<PotionMaker.Models.Ingredient>
+﻿@model MerchantShopViewModel
 @{
     ViewData["Title"] = "Merchant Shop";
 }
 <h1 class="text-center">Welcome to the merchant shop!!</h1>
-<p>This is where you can restock on all your potion ingredients.</p>
+<p>This is where you can restock on all your potion ingredients. 
+    Insert the number of ingredients you want in an input box and hit the "Complete Order" button</p>
+<div class="float-left">
+    <a asp-action="PotionStock"><img src="~/arrow left.png" style="width:65px;height:40px" alt="Merchant Shop" /></a>
+    <p class="float-right" style="padding-top:6px; padding-left:6px">Lets go home.</p>
+</div>
+<span asp-validation-for="AmountBought"></span>
 <div class="panel-body">
     <table class="table table-md text-md-left table-bordered">
         <thead>
             <tr>
                 <th>Ingredient Name</th>
                 <th>Description</th>
-                <th>Amount</th>
-                <th></th>
+                <th>Amount at home</th>
+                <th>Amount to buy</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (Ingredient i in Model)
+            @foreach (Ingredient i in Model.IngList)
             {
             <tr>
                 <td>@i.IngName</td>
                 <td>@i.IngDescription</td>
                 <td>@i.IngStock </td>
-                <td><img /><input /><img /></td>
-                <td><button class="btn btn-success">Purchase</button></td>
+                <td>
+                    <form asp-controller="Home" asp-action="MerchantShop" asp-antiforgery="true" method="post">
+                        <input type="hidden" value="@i.IngID" asp-for="IngredientID" />
+                        <input asp-for="AmountBought" value="0" />
+                        <button class="btn btn-success" type="submit">Complete Order</button>
+                    </form>
+                </td>
             </tr>
             }
         </tbody>

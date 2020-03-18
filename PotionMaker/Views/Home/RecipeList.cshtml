@@ -1,8 +1,22 @@
-﻿@model IEnumerable<PotionMaker.Models.Recipe>
+﻿@inject UserManager<AppUser> user
+@inject SignInManager<AppUser> signUser
+@model RecipePotionViewModel
 @{
     ViewData["Title"] = "Recipe List";
+    bool isAdmin = false;
+    if (signUser.IsSignedIn(User))
+    {
+        foreach (AppUser a in await user.GetUsersInRoleAsync("Admin"))
+        {
+            if (user.GetUserName(User) == a.UserName)
+            {
+                isAdmin = true;
+            }
+        }
+    }
 }
 <h2 class="text-center">All currently known recipes</h2>
+<p>This page is for seeing what recipes have currently been used, meaning that a potion has been made before with one of these recipes.</p>
 <div class="panel-body">
     <table class="table table-md text-md-left table-bordered">
         <thead>
@@ -14,13 +28,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Recipe r in Model)
+            @foreach (Recipe r in Model.Recipes)
             {
                 <tr>
                     <td>@r.RPotionName</td>
-                    @foreach (Ingredient i in r.RIngredients)
+                    <td><img src="~/pictures/@r.RIng1.IngPicture" style="width:25px;height:25px"/>@r.RIng1.IngName</td>
+                    <td><img src="~/pictures/@r.RIng2.IngPicture" style="width:25px;height:25px"/>@r.RIng2.IngName</td>
+                    <td><img src="~/pictures/@r.RIng3.IngPicture" style="width:25px;height:25px"/>@r.RIng3.IngName</td>
+                    @if (isAdmin)
                     {
-                        <td>@i.IngName</td>
+                        <td>
+                            <form asp-controller="Home" asp-action="RecipeDelete" asp-antiforgery="true" method="post">
+                                <input class="form-control" type="hidden" value="@r.RecipeID" asp-for="RecipeID" />
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
                     }
                 </tr>
             }

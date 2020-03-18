@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PotionMaker.Models;
@@ -8,9 +9,19 @@ namespace PotionMaker.ViewModels
 {
     public class PotionCreationViewModel
     {
-        public string RIng1 { get; set; }
-        public string RIng2 { get; set; }
-        public string RIng3 { get; set; }
-        public List<Ingredient> IngList { get; set; }
+        [Required(ErrorMessage = "Please input a name for your potion")]
+        [StringLength(50, MinimumLength = 2)]
+        public string PotionName { get; set; }
+        [Required]
+        public int RecipeID { get; set; }
+        [Required(ErrorMessage = "Please input the description of your potion")]
+        public string PotionDesc { get; set; }
+        public int RIng1ID { get; set; }
+        public int RIng2ID { get; set; }
+        public int RIng3ID { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
+        public List<Recipe> Recipes { get; set; }
+        public bool outOfStock { get; set; }
+        public bool Error { get; set; }
     }
 }

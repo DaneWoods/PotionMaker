@@ -1,9 +1,27 @@
-﻿@model IEnumerable<PotionMaker.Models.Ingredient>
+﻿@inject UserManager<AppUser> user
+@inject SignInManager<AppUser> signUser
+@model PotionStockViewModel
 @{
     ViewData["Title"] = "Ingredient Stock";
+    bool isAdmin = false;
+    if (signUser.IsSignedIn(User))
+    {
+        foreach (AppUser a in await user.GetUsersInRoleAsync("Admin"))
+        {
+            if (user.GetUserName(User) == a.UserName)
+            {
+                isAdmin = true;
+            }
+        }
+    }
 }
 <h2 class="text-center">This is all of the stock for the ingredients</h2>
+<p>This will show the stock of all of the ingredients, and potions that you currently possess</p>
 <div class="panel-body">
+    <div class="float-right">
+        <a asp-action="MerchantShop"><img src="~/arrow right.png" style="width:65px;height:40px" alt="Merchant Shop" /></a>
+        <p class="float-left" style="padding-top:6px; padding-right:6px">This way to the shop!</p>
+    </div>
     <table class="table table-md text-md-left table-bordered">
         <thead>
             <tr>
@@ -13,12 +31,40 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Ingredient i in Model)
+            @foreach (Ingredient i in Model.Ingredients)
             {
                 <tr>
-                    <td>@i.IngName</td>
+                    <td><img src="~/pictures/@i.IngPicture" style="width:25px;height:25px"/>@i.IngName</td>
                     <td>@i.IngDescription</td>
                     <td>@i.IngStock </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <table class="table table-md text-md-left table-bordered">
+        <thead>
+            <tr>
+                <th>Potion Name</th>
+                <th>Potion Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Potion p in Model.Potions)
+            {
+                <tr>
+                    <td>@p.PotionName</td>
+                    <td>@p.PotionDescription</td>
+                    <td>@p.PotionStock</td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <form asp-controller="Home" asp-action="PotionDelete" asp-antiforgery="true" method="post">
+                                <input class="form-control" type="hidden" value="@p.PotionID" asp-for="PotionID" />
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

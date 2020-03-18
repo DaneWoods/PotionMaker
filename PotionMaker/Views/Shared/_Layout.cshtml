@@ -1,9 +1,24 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<AppUser> user
+@inject SignInManager<AppUser> signUser
+@{ 
+    bool isAdmin = false;
+    if (signUser.IsSignedIn(User))
+    {
+        foreach (AppUser a in await user.GetUsersInRoleAsync("Admin"))
+        {
+            if(user.GetUserName(User) == a.UserName)
+            {
+                isAdmin = true;
+            }
+        }
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PotionMakerTermProject</title>
+    <title>@ViewData["Title"] - PotionMaker</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -29,16 +44,23 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                               asp-action="PotionStock">Potion Inventory</a>
+                               asp-action="PotionStock">Stock of Items</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                               asp-action="RecipeList">Potion List</a>
+                               asp-action="RecipeList">Recipe List</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                               asp-action="MerchantShop">Merchant Shop</a>
+                               asp-action="Search">Search</a>
                         </li>
+                        @if (isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin"
+                                   asp-action="Index">Admin Controlls</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
