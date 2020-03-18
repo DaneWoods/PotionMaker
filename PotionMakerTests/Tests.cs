@@ -21,6 +21,7 @@ namespace PotionMakerTests
         HomeController home;
         FakeRepository frepo;
         PotionCreationViewModel pcvm;
+        PotionRecipeCreationViewModel prcvm;
         PotionStockViewModel psvm;
         RecipePotionViewModel rpvm;
         MerchantShopViewModel msvn;
@@ -38,10 +39,14 @@ namespace PotionMakerTests
             r1 = new Recipe { RecipeID = 0, RPotionName = "Potion of Swiftness", RPotionDesc = "Makes the user run with godspeed", RIng1 = i1, RIng2 = i2, RIng3 = i2 };
             r2 = new Recipe { RecipeID = 1, RPotionName = "Potion of Strength", RPotionDesc = "Gives the strength of the mightiest warrior", RIng1 = i1, RIng2 = i3, RIng3 = i3 };
             r3 = new Recipe { RecipeID = 2, RPotionName = "Potion of Coolness", RPotionDesc = "Makes you really cool", RIng1 = i1, RIng2 = i2, RIng3 = i3};
+            frepo.Potions.Clear();
+            frepo.Recipes.Clear();
+            frepo.Ingredients.Clear();
             frepo.Ingredients.Add(i1);
             frepo.Ingredients.Add(i2);
             frepo.Ingredients.Add(i3);
             pcvm = new PotionCreationViewModel { Ingredients = frepo.Ingredients, Recipes = frepo.Recipes };
+            prcvm = new PotionRecipeCreationViewModel { Recipes = frepo.Recipes, Ingredients = frepo.Ingredients };
             psvm = new PotionStockViewModel { Ingredients = frepo.Ingredients, Potions = frepo.Potions };
             rpvm = new RecipePotionViewModel { Recipes = frepo.Recipes };
             msvn = new MerchantShopViewModel { IngList = frepo.Ingredients };
@@ -92,10 +97,10 @@ namespace PotionMakerTests
         public void RecipeBrewingTestSuccess()
         {
             // Arrange
-            pcvm.Recipes.Add(r1);
-            pcvm.RecipeID = 0;
+            prcvm.Recipes.Add(r1);
+            prcvm.RecipeID = 0;
             // Act
-            home.RecipeBrewing(pcvm);
+            home.RecipeBrewing(prcvm);
             // Assert
             Assert.Equal(1, frepo.Potions.Count);
             Assert.Equal(1, frepo.Recipes.Count);
@@ -113,14 +118,14 @@ namespace PotionMakerTests
         {
             // Arrange
             frepo.Ingredients[1].IngStock = 1;
-            pcvm.Recipes.Add(r1);
-            pcvm.RecipeID = 0;
+            prcvm.Recipes.Add(r1);
+            prcvm.RecipeID = 0;
             // Act
-            home.RecipeBrewing(pcvm);
+            home.RecipeBrewing(prcvm);
             // Assert
             Assert.Equal(0, frepo.Potions.Count);
             Assert.Equal(1, frepo.Recipes.Count);
-            Assert.True(pcvm.outOfStock);
+            Assert.True(prcvm.outOfStock);
         }
 
         [Fact]
