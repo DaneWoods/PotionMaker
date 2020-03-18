@@ -9,6 +9,7 @@ namespace PotionMaker.ViewModels
 {
     public class MerchantShopViewModel
     {
+        [Required]
         public int IngredientID { get; set; }
         [Required(ErrorMessage = "Please input a number between 0-100")]
         [Range(0, 100)]

@@ -1,0 +1,31 @@
+﻿@model PotionCreationViewModel
+@{
+    ViewData["Title"] = "Recipe Brewing";
+}
+<div class="panel panel-success">
+    <div class="panel-heading text-left"><h4>Create a potion</h4></div>
+    <p>This page is for if you cant remember what a potion takes to make. So you just need to select the recipe you want to follow and click the create potion button.</p>
+    <div class="panel-body">
+        @if (Model.outOfStock)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>You dont have the sufficient ingredients</strong> If you are seeing this it means that you dont have ineough ingredients to make that potion and must go restock at the merhcnat shop. You can head there from the Stock of Ingredients page.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+    <form asp-controller="Home" asp-action="RecipeBrewing" asp-antiforgery="true" method="post">
+        <select class="form-control" asp-for="RecipeID">
+            @foreach (Recipe r in Model.Recipes)
+            {
+                <option value="@r.RecipeID">@r.RPotionName</option>
+            }
+        </select>
+        <br />
+        <div class="text-md-left">
+            <button class="btn btn-primary" type="submit">Brew Potion</button>
+        </div>
+    </form>
+    </div>
+</div>

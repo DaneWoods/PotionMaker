@@ -3,56 +3,68 @@
     ViewData["Title"] = "Potion Brewing";
 }
 <div class="panel panel-success">
-        <div class="panel-heading text-left"><h4>Create a potion</h4></div>
-        <div class="panel-body">
-            @if (Model.Error)
-            {
-                <h1>You bad</h1>
-            }
-            @if (Model.outOfStock)
-            {
-                <h1>You not enough goods my man.</h1>
-            }
-            <form asp-controller="Home" asp-action="PotionBrewing" asp-antiforgery="true" method="post">
-                <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
-                <div>
-                    <div class="form-group">
-                        <label class="form-control">Potion Name:</label>
-                        <span asp-validation-for="PotionName"></span>
-                        <input class="form-control" asp-for="PotionName" />
-                        <br />
-                        <label class="form-control">Potion Desc:</label>
-                        <input class="form-control" asp-for="PotionDesc" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control">Ingredient 1:</label>
-                        <select class="form-control" asp-for="RIng1ID">
-                            @foreach (Ingredient Ing in Model.Ingredients)
-                            {
-                                <option value="@Ing.IngID">@Ing.IngName</option>
-                            }
-                        </select>
-                        <br />
-                        <label class="form-control">Ingredient 2:</label>
-                        <select class="form-control" asp-for="RIng2ID">
-                            @foreach (Ingredient Ing in Model.Ingredients)
-                            {
-                                <option value="@Ing.IngID">@Ing.IngName</option>
-                            }
-                        </select>
-                        <br />
-                        <label class="form-control">Ingredient 3:</label>
-                        <select class="form-control" asp-for="RIng3ID">
-                            @foreach (Ingredient Ing in Model.Ingredients)
-                            {
-                                <option value="@Ing.IngID">@Ing.IngName</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="text-md-left">
-                        <button class="btn btn-primary" type="submit">Brew Potion</button>
-                    </div>
+    <div class="panel-heading text-left"><h4>Create a potion</h4></div>
+    <p>This page is for someone to create a potion, you can either try to make one that has a recipe made for it, or you can create a completely new potion with random ingredients. If you are going to choose to make a new potion give it a name and description that is appropriate.</p>
+    <div class="panel-body">
+        @if (Model.Error)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>You must insert the proper data!</strong> If you are seeing this you either tried to recreate an existing potion with different ingredients, or created a differently named potion with the same ingredients of another potion.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @if (Model.outOfStock)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>You dont have the sufficient ingredients</strong> If you are seeing this it means that you dont have ineough ingredients to make that potion and must go restock at the merhcnat shop. You can head there from the Stock of Ingredients page. 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <form asp-controller="Home" asp-action="PotionBrewing" asp-antiforgery="true" method="post">
+            <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
+            <div>
+                <div class="form-group">
+                    <label class="form-control">Potion Name:</label>
+                    <span asp-validation-for="PotionName"></span>
+                    <input class="form-control" asp-for="PotionName" />
+                    <br />
+                    <label class="form-control">Potion Desc:</label>
+                    <input class="form-control" asp-for="PotionDesc" />
                 </div>
-            </form>
-        </div>
+                <div class="form-group">
+                    <label class="form-control">Ingredient 1:</label>
+                    <select class="form-control" asp-for="RIng1ID">
+                        @foreach (Ingredient Ing in Model.Ingredients)
+                        {
+                            <option value="@Ing.IngID">@Ing.IngName</option>
+                        }
+                    </select>
+                    <br />
+                    <label class="form-control">Ingredient 2:</label>
+                    <select class="form-control" asp-for="RIng2ID">
+                        @foreach (Ingredient Ing in Model.Ingredients)
+                        {
+                            <option value="@Ing.IngID">@Ing.IngName</option>
+                        }
+                    </select>
+                    <br />
+                    <label class="form-control">Ingredient 3:</label>
+                    <select class="form-control" asp-for="RIng3ID">
+                        @foreach (Ingredient Ing in Model.Ingredients)
+                        {
+                            <option value="@Ing.IngID">@Ing.IngName</option>
+                        }
+                    </select>
+                </div>
+                <div class="text-md-left">
+                    <button class="btn btn-primary" type="submit">Brew Potion</button>
+                </div>
+                Want to create a potion that exists using its recipe? click <a asp-controller="Home" asp-action="RecipeBrewing">Here.</a>
+            </div>
+        </form>
+    </div>
 </div>

@@ -1,0 +1,116 @@
+﻿@model SearchViewModel
+@{
+    ViewData["Title"] = "Searching";
+}
+<div class="panel panel-success">
+    <div class="panel-heading text-left"><h4>Search through the database</h4></div>
+    <p>
+        This page is purely for searching up specific items.
+        Choose something withing the dropdown section and click the search button to grab one items data corresponding to what you selected
+    </p>
+    <div class="panel-body">
+        <form asp-controller="Home" asp-action="IngredientSearch" asp-antiforgery="true" method="post">
+            <label class="form-control float-left" style="width: 225px">Search Ingredient by Name:</label>
+            <select class="form-control float-left" asp-for="ingredientOutID" style="width: 250px">
+                @foreach (Ingredient Ing in Model.Ingredients)
+                {
+                    <option value="@Ing.IngID">@Ing.IngName</option>
+                }
+            </select>
+            <button class="btn btn-success float-left" type="submit">Search</button>
+            <br />
+            <table class="table table-md text-md-left table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ingredient Name</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Ingredient i in Model.Ingredients)
+                    {
+                        if (i.IngID == Model.ingredientInID)
+                        {
+                            <tr>
+                                <td><img src="~/pictures/@i.IngPicture" style="width:25px;height:25px" />@i.IngName</td>
+                                <td>@i.IngDescription</td>
+                                <td>@i.IngStock </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </form>
+        <form asp-controller="Home" asp-action="RecipeSearch" asp-antiforgery="true" method="post">
+            <label class="form-control float-left" style="width: 225px">Search Recipe by Name:</label>
+            <select class="form-control float-left" asp-for="recipeOutID" style="        padding-top: 2px;
+        padding-bottom: 2px;
+        width: 250px">
+                @foreach (Recipe r in Model.Recipes)
+                {
+                    <option value="@r.RecipeID">@r.RPotionName</option>
+                }
+            </select>
+            <button class="btn btn-success float-left" type="submit">Search</button>
+            <br />
+            <table class="table table-md text-md-left table-bordered">
+                <thead>
+                    <tr>
+                        <th>Potion Recipe</th>
+                        <th>Ingredient 1:</th>
+                        <th>Ingredient 2:</th>
+                        <th>Ingredient 3:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Recipe r in Model.Recipes)
+                    {
+                        if (r.RecipeID == Model.recipeInID)
+                        {
+                            <tr>
+                                <td>@r.RPotionName</td>
+                                <td><img src="~/pictures/@r.RIng1.IngPicture" style="width: 25px; height: 25px" />@r.RIng1.IngName</td>
+                                <td><img src="~/pictures/@r.RIng2.IngPicture" style="width:25px;height:25px" />@r.RIng2.IngName</td>
+                                <td><img src="~/pictures/@r.RIng3.IngPicture" style="width:25px;height:25px" />@r.RIng3.IngName</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </form>
+        <form asp-controller="Home" asp-action="PotionSearch" asp-antiforgery="true" method="post">
+            <label class="form-control float-left" style="width: 225px">Search Potion by Name:</label>
+            <select class="form-control float-left" asp-for="potionOutID" style="padding-top: 2px; width: 250px">
+                @foreach (Potion p in Model.Potions)
+                {
+                    <option value="@p.PotionID">@p.PotionName</option>
+                }
+            </select>
+            <button class="btn btn-success float-left" type="submit">Search</button>
+            <br />
+            <table class="table table-md text-md-left table-bordered">
+                <thead>
+                    <tr>
+                        <th>Potion Name</th>
+                        <th>Potion Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Potion p in Model.Potions)
+                    {
+                        if (p.PotionID == Model.potionInID)
+                        {
+                            <tr>
+                                <td>@p.PotionName</td>
+                                <td>@p.PotionDescription</td>
+                                <td>@p.PotionStock</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

@@ -12,7 +12,6 @@ namespace PotionMaker.Repositories
         List<Ingredient> Ingredients { get; }
         List<Potion> Potions { get; }
         List<Recipe> Recipes { get; }
-        //bool potionNameExists(Potion p);
         bool potionExists(Potion p);
         void incrementPotion(Potion p);
         void addIngredientStock(MerchantShopViewModel msvn);
@@ -23,6 +22,8 @@ namespace PotionMaker.Repositories
         Potion getPotionByName(string pName);
         Recipe getRecipeByID(int id);
         Recipe getRecipeByName(string pName);
+        void deletePotion(Potion p);
+        void deleteRecipe(Recipe r);
         void addPotion(Potion p);
         void addRecipe(Recipe r);
     }

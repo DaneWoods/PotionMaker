@@ -12,6 +12,7 @@ namespace PotionMaker.Models
         [Key]
         public int RecipeID { get; set; }
         public string RPotionName { get; set; }
+        public string RPotionDesc { get; set; }
         public Ingredient RIng1 { get; set; }
         public Ingredient RIng2 { get; set; }
         public Ingredient RIng3 { get; set; }

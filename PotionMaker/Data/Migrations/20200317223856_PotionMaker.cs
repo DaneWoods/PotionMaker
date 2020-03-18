@@ -7,12 +7,53 @@ namespace PotionMaker.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Discriminator",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Title",
+                table: "AspNetUsers",
+                maxLength: 50,
+                nullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
             migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
                     IngID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IngPicture = table.Column<string>(nullable: true),
                     IngName = table.Column<string>(nullable: true),
                     IngDescription = table.Column<string>(nullable: true),
                     IngStock = table.Column<int>(nullable: false)
@@ -29,7 +70,7 @@ namespace PotionMaker.Data.Migrations
                     PotionID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PotionName = table.Column<string>(maxLength: 50, nullable: false),
-                    PotionDescription = table.Column<string>(maxLength: 100, nullable: false),
+                    PotionDescription = table.Column<string>(nullable: true),
                     PIng1IngID = table.Column<int>(nullable: true),
                     PIng2IngID = table.Column<int>(nullable: true),
                     PIng3IngID = table.Column<int>(nullable: true),
@@ -65,6 +106,7 @@ namespace PotionMaker.Data.Migrations
                     RecipeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RPotionName = table.Column<string>(nullable: true),
+                    RPotionDesc = table.Column<string>(nullable: true),
                     RIng1IngID = table.Column<int>(nullable: true),
                     RIng2IngID = table.Column<int>(nullable: true),
                     RIng3IngID = table.Column<int>(nullable: true)
@@ -133,6 +175,42 @@ namespace PotionMaker.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
+
+            migrationBuilder.DropColumn(
+                name: "Discriminator",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "Title",
+                table: "AspNetUsers");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
         }
     }
 }

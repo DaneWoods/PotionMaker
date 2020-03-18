@@ -10,6 +10,7 @@ namespace PotionMaker.Models
     {
         [Key]
         public int IngID { get; set; }
+        public string IngPicture { get; set; }
         public string IngName { get; set; }
         public string IngDescription { get; set; }
         public int IngStock { get; set; }

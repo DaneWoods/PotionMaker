@@ -56,9 +56,15 @@ namespace PotionMaker.Repositories
         public void addIngredientStock(MerchantShopViewModel msvn)
         {
             Ingredient i = getIngredientByID(msvn.IngredientID);
-            i.IngStock = i.IngStock + msvn.AmountBought;
-            context.Ingredients.Update(i);
-            context.SaveChanges();
+            if (msvn.AmountBought >= 0 && msvn.AmountBought <= 100)
+            {
+                i.IngStock = i.IngStock + msvn.AmountBought;
+                context.Ingredients.Update(i);
+                context.SaveChanges();
+            }
+            else
+                throw new ArgumentOutOfRangeException("Please input a value between 0 and 100");
+            
         }
 
         public void minusIngredientStock(Recipe r)
@@ -112,7 +118,12 @@ namespace PotionMaker.Repositories
 
         public Recipe getRecipeByID(int id)
         {
-            return context.Recipes.First(x => x.RecipeID == id);
+            if(id != 0)
+            {
+                return context.Recipes.First(x => x.RecipeID == id);
+            }
+            return null;
+            
         }
 
         public Recipe getRecipeByName(string pName)
@@ -125,6 +136,18 @@ namespace PotionMaker.Repositories
                 }
             }
             return null;
+        }
+
+        public void deletePotion(Potion p)
+        {
+            context.Potions.Remove(p);
+            context.SaveChanges();
+        }
+        public void deleteRecipe(Recipe r)
+        {
+            context.Recipes.Remove(r);
+            context.Potions.Remove(getPotionByName(r.RPotionName));
+            context.SaveChanges();
         }
 
         public void addPotion(Potion p)

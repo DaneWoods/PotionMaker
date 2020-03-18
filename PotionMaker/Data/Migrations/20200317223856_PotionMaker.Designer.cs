@@ -10,7 +10,7 @@ using PotionMaker.Repositories;
 namespace PotionMaker.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200317044136_PotionMaker")]
+    [Migration("20200317223856_PotionMaker")]
     partial class PotionMaker
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,9 @@ namespace PotionMaker.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -114,6 +117,8 @@ namespace PotionMaker.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -138,11 +143,9 @@ namespace PotionMaker.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -173,11 +176,9 @@ namespace PotionMaker.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -195,6 +196,8 @@ namespace PotionMaker.Data.Migrations
                     b.Property<string>("IngDescription");
 
                     b.Property<string>("IngName");
+
+                    b.Property<string>("IngPicture");
 
                     b.Property<int>("IngStock");
 
@@ -215,9 +218,7 @@ namespace PotionMaker.Data.Migrations
 
                     b.Property<int?>("PIng3IngID");
 
-                    b.Property<string>("PotionDescription")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.Property<string>("PotionDescription");
 
                     b.Property<string>("PotionName")
                         .IsRequired()
@@ -248,6 +249,8 @@ namespace PotionMaker.Data.Migrations
 
                     b.Property<int?>("RIng3IngID");
 
+                    b.Property<string>("RPotionDesc");
+
                     b.Property<string>("RPotionName");
 
                     b.HasKey("RecipeID");
@@ -259,6 +262,17 @@ namespace PotionMaker.Data.Migrations
                     b.HasIndex("RIng3IngID");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("PotionMaker.Models.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

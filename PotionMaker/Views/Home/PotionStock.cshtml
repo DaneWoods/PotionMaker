@@ -1,10 +1,27 @@
-﻿@model PotionStockViewModel
+﻿@inject UserManager<AppUser> user
+@inject SignInManager<AppUser> signUser
+@model PotionStockViewModel
 @{
     ViewData["Title"] = "Ingredient Stock";
+    bool isAdmin = false;
+    if (signUser.IsSignedIn(User))
+    {
+        foreach (AppUser a in await user.GetUsersInRoleAsync("Admin"))
+        {
+            if (user.GetUserName(User) == a.UserName)
+            {
+                isAdmin = true;
+            }
+        }
+    }
 }
 <h2 class="text-center">This is all of the stock for the ingredients</h2>
+<p>This will show the stock of all of the ingredients, and potions that you currently possess</p>
 <div class="panel-body">
-    <a asp-action="MerchantShop" class="float-right"><img src="~/Bo-bobo.png" style="width:50px;height:50px" alt="Merchant Shop" /></a>
+    <div class="float-right">
+        <a asp-action="MerchantShop"><img src="~/arrow right.png" style="width:65px;height:40px" alt="Merchant Shop" /></a>
+        <p class="float-left" style="padding-top:6px; padding-right:6px">This way to the shop!</p>
+    </div>
     <table class="table table-md text-md-left table-bordered">
         <thead>
             <tr>
@@ -17,7 +34,7 @@
             @foreach (Ingredient i in Model.Ingredients)
             {
                 <tr>
-                    <td>@i.IngName</td>
+                    <td><img src="~/pictures/@i.IngPicture" style="width:25px;height:25px"/>@i.IngName</td>
                     <td>@i.IngDescription</td>
                     <td>@i.IngStock </td>
                 </tr>
@@ -39,6 +56,15 @@
                     <td>@p.PotionName</td>
                     <td>@p.PotionDescription</td>
                     <td>@p.PotionStock</td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <form asp-controller="Home" asp-action="PotionDelete" asp-antiforgery="true" method="post">
+                                <input class="form-control" type="hidden" value="@p.PotionID" asp-for="PotionID" />
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
